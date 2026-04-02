@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run-experiments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FORCE_CPU: "1"
+      MPLBACKEND: "Agg"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps + run all experiments
+        run: bash ci/run_ci.sh
+      - name: Upload CSV and plots
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-results
+          path: |
+            results/*.csv
+            results/*.png
