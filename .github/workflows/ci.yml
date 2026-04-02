@@ -1,0 +1,30 @@
+name: extraction-experiments-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run-experiments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install + run
+        run: bash ci/run_ci.sh
+
+      - name: Upload results artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-results
+          path: |
+            results/*.csv
+            results/*.png
