@@ -1,0 +1,24 @@
+name: extraction-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run-experiments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run experiments
+        run: ./ci/run_ci.sh
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-results
+          path: |
+            outputs/*.csv
+            outputs/*.svg
