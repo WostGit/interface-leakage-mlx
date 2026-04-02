@@ -1,0 +1,6 @@
+numpy>=1.26
+pandas>=2.1
+matplotlib>=3.8
+# Optional on Apple Silicon for real Qwen2-0.5B MLX run
+mlx>=0.15; platform_system == "Darwin" and platform_machine == "arm64"
+mlx-lm>=0.18; platform_system == "Darwin" and platform_machine == "arm64"
